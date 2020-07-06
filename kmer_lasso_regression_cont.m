@@ -80,7 +80,7 @@ if (exist(file_name, 'file') ~= 2)
     % alpha = 1: lasso (L1 reg.), eps: ridge (L2 reg.)
     if (lasso_exec > 0)
         fprintf('running lasso optimization ... (slow)\n');
-        [bweights,bfitinfo] = lasso(X,Y,'Alpha',1,'CV',10);
+        [bweights,bfitinfo] = lasso(full(X),Y,'Alpha',1,'CV',10);
         save(file_name,'bweights','bfitinfo','j','-v7.3');
         fprintf('done\n');
     else
@@ -276,7 +276,7 @@ for j = 1:size(feature_files,1)
     Kjcol = Kjcol(x);
     Kj = Kj(:,x);
     
-    if ((max(size(Kjcol)) ~= max(size(idx))) || (sum(strcmp(Kjcol',idx))<max(size(idx))))
+    if ((max(size(Kjcol)) ~= max(size(idx))) || (sum(strcmp(Kjcol,idx))<max(size(idx))))
         fprintf('error loading kmer file %s\n', feature_files{j,1});
     else
         K = [K; Kj];
